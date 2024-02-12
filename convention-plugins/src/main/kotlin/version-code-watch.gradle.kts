@@ -1,0 +1,4 @@
+import convention_plugins.AppKind
+import convention_plugins.setVersionCodeForApp
+
+setVersionCodeForApp(AppKind.Watch)

@@ -1,0 +1,6 @@
+[versions]
+composeOClock = "0.1.0-SNAPSHOT"
+
+[libraries]
+compose-oclock-core = { group = "org.splitties.compose.oclock", name = "core", version.ref = "composeOClock" }
+compose-oclock-watchface-renderer = { group = "org.splitties.compose.oclock", name = "watchface-renderer", version.ref = "composeOClock" }

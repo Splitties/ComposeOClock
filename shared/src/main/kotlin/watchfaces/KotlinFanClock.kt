@@ -34,21 +34,20 @@ import org.splitties.compose.oclock.sample.extensions.rotate
 @Composable
 fun KotlinFanClock() {
     Background()
-    val textBrush = remember {
-        Brush.sweepGradient(
-            4.5f/8f to Color(0x7C00E5FF),
-            5.1f/8f to Color(0xFF00E5FF),
-            6.2f/8f to Color(0xFF00E5FF),
-            6.5f/8f to Color(0xFFFFFF8D),
-        )
-    }
-    ComposeOClockWatermark(textBrush)
+    ComposeOClockWatermark(niceBrush)
     KotlinLogoHourPips()
     HoursHand()
     MinutesHand()
     SecondsHand()
     CenterDot()
 }
+
+private val niceBrush = Brush.sweepGradient(
+    4.5f / 8f to Color(0x7C00E5FF),
+    5.1f / 8f to Color(0xFF00E5FF),
+    6.2f / 8f to Color(0xFF00E5FF),
+    6.5f / 8f to Color(0xFFFFFF8D),
+)
 
 @Composable
 private fun Background() {

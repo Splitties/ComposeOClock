@@ -309,3 +309,7 @@ We decided to not publish it because the dev UX and product potential isn't grea
 We are waiting for the Wear OS team at Google to make an on-device API, so executable watch faces,
 like ones made with Compose O'Clock, or `androidx.wear.watchface`, can update the WFF that
 will be used for ambient mode or energy saver mode (which will make sense once the WFF renderer is improved).
+
+## Credits
+
+Thanks to [Yuri Schimke](https://github.com/yschimke) for encouraging me to try making a Compose API for Watch Faces, and for all the helpful input! 🙏❤️

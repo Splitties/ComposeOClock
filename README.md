@@ -3,13 +3,23 @@
 Draw Wear OS Watch Faces with Compose Canvas (& runtime)
 
 Compose O'Clock is the fastest way to develop a good looking and efficient Watch Face for Wear OS.
+**You can see the result of your code changes within a second!**
 
 Using this SDK, knowing how to use Jetpack Compose is about 96% of the knowledge you need to know to
 successfully get a proper watch face that you can also see live in a phone app.
 
 The 4% remaining to develop a good watch face app is documented here.
 
-## Features
+## Visual examples
+
+Here are two sample screenshots from this sample repo to give you a quick idea
+of the possibilities offered by Compose O'Clock.
+
+The screenshots have been taken right from IDE preview.
+
+![Compose O'Clock sample screenshot](.screenshots/kotlin-and-compose-fan-clock.png)
+
+## Features  
 
 - ✅ **Live-preview** your Watch Face in Android Studio, a phone, or a watch
 - ✅ **Adaptive refresh-rate** out of the box (up to 60fps on watches, and 120fps on phones)
@@ -22,6 +32,7 @@ The 4% remaining to develop a good watch face app is documented here.
 - ✅ Render your Watch Faces **in any Composable** in the phone or watch app
 - ✅ Full freedom for **complications** rendering (custom data like weather, step counts, heart rate…)
 - ✅ **Technical support** available for pro licenses
+- ⏳ Layer caching to draw very complex graphics efficiently (under development)
 
 ## Getting started
 

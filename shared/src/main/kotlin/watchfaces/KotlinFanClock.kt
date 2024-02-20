@@ -63,7 +63,7 @@ private fun HoursHand() {
     val isAmbient by LocalIsAmbient.current
     OClockCanvas {
         rotate(degrees = time.hourWithMinutes * 30) {
-            val width = 10.dp.toPx()
+            val width = 16.dp.toPx()
             clockHand(
                 brush = SolidColor(kotlinLogoColors[0]),
                 width = width,

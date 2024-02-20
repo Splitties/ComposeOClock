@@ -19,6 +19,13 @@ The screenshots have been taken right from IDE preview.
 
 ![Compose O'Clock sample screenshot](.screenshots/kotlin-and-compose-fan-clock.png)
 
+## Developer experience demo (2min 21s, 8.3MB)
+
+Watching **with sound on** is recommended.
+
+[compose-o-clock-demo-small.webm](https://github.com/Splitties/ComposeOClock/assets/6975237/cc3d03c2-0191-4d0b-98c2-def77650a639)
+
+
 ## Features  
 
 - ✅ **Live-preview** your Watch Face in Android Studio, a phone, or a watch

@@ -35,7 +35,7 @@
             android:name=".SampleWatchFaceService"
             android:directBootAware="true"
             android:exported="true"
-            android:label="▶️⏚ Compose O'Clock"
+            android:label="▶⏚ Compose O'Clock"
             android:permission="android.permission.BIND_WALLPAPER">
             <intent-filter>
                 <action android:name="android.service.wallpaper.WallpaperService" />

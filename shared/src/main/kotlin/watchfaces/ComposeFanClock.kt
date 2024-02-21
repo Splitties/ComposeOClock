@@ -27,7 +27,7 @@ import org.splitties.compose.oclock.LocalTime
 import org.splitties.compose.oclock.OClockCanvas
 import org.splitties.compose.oclock.sample.WatchFacePreview
 import org.splitties.compose.oclock.sample.WearPreviewSizesProvider
-import org.splitties.compose.oclock.sample.elements.SinusoidalMinutes
+import org.splitties.compose.oclock.sample.elements.SinusoidalCrown
 import org.splitties.compose.oclock.sample.elements.clockHand
 import org.splitties.compose.oclock.sample.elements.setToHeart
 import org.splitties.compose.oclock.sample.elements.vectors.rememberComposeMultiplatformVectorPainter
@@ -45,7 +45,12 @@ fun ComposeFanClock() {
     BigComposeLogoBg()
     HoursHand()
     MinutesHand()
-    SinusoidalMinutes(
+    val time = LocalTime.current
+    val isAmbient by LocalIsAmbient.current
+    SinusoidalCrown(
+        getRatio = {
+            if (isAmbient) 0f else time.secondsWithMillis / 60f
+        },
         interactiveFillBrush = remember { Brush.sweepGradient(someColors) },
         ambientFillBrush = remember { Brush.sweepGradient(brightColors) }
     )

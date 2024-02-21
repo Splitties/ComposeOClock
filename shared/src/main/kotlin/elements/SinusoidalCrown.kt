@@ -6,13 +6,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.geometry.center
-import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathMeasure
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -34,10 +34,11 @@ import org.splitties.compose.oclock.sample.extensions.rotateAround
 
 @WatchFacePreview
 @Composable
-fun SinusoidalMinutesPreview(
+fun SinusoidalCrownPreview(
     @PreviewParameter(WearPreviewSizesProvider::class) size: Dp
 ) = WatchFacePreview(size) {
-    SinusoidalMinutes()
+    val time = LocalTime.current
+    SinusoidalCrown(getRatio = { time.minutesWithSeconds / 60f })
     val wearOsLogo = rememberWearOsLogoVectorPainter()
     val composeLogo = rememberComposeMultiplatformVectorPainter()
     val washingOutFilter = remember {
@@ -63,47 +64,45 @@ fun SinusoidalMinutesPreview(
 }
 
 @Composable
-fun SinusoidalMinutes(
+fun SinusoidalCrown(
+    getRatio: () -> Float,
     interactiveFillBrush: Brush = remember { SolidColor(Color.Cyan) },
     ambientFillBrush: Brush = remember { SolidColor(Color.Cyan) }
 ) {
+    val pathMeasure = remember { PathMeasure() }
     val cachedPath = remember { Path() }.let { path ->
         rememberStateWithSize {
-            path.apply { setToSineWaveLike(size) }
+            path.also {
+                it.setToSineWaveLike(size)
+                pathMeasure.setPath(it, forceClosed = false)
+            }
         }
     }
-    val cachedPathMeasure = rememberStateWithSize {
-        PathMeasure().also {
-            it.setPath(
-                path = cachedPath.get(),
-                forceClosed = false
-            )
-        }
+    val wholePathStroke = rememberStateWithSize {
+        Stroke(width = 1.dp.toPx())
+    }
+    val progressPathStroke = rememberStateWithSize {
+        Stroke(width = 3.dp.toPx(), cap = StrokeCap.Round)
     }
     val segment = remember { Path() }
-    val time = LocalTime.current
     val isAmbient by LocalIsAmbient.current
     OClockCanvas {
         val path by cachedPath
-        val minuteRatio = time.minutesWithSeconds / 60f
-        val pathMeasure by cachedPathMeasure
-        val offset = pathMeasure.let {
-            it.getPosition(distance = minuteRatio * it.length)
-
-        }
+        val ratio = getRatio()
+        segment.reset()
         pathMeasure.getSegment(
             startDistance = 0f,
-            stopDistance = minuteRatio * pathMeasure.length,
+            stopDistance = ratio * pathMeasure.length,
             destination = segment
         )
-        drawPath(path, Color.LightGray, style = Stroke(width = 1.dp.toPx()))
+        drawPath(path, Color.LightGray, style = wholePathStroke.get())
         val fillBrush = if (isAmbient) ambientFillBrush else interactiveFillBrush
-        drawPath(segment, fillBrush, style = Stroke(width = 3.dp.toPx()))
-        drawCircle(fillBrush, radius = 4.dp.toPx(), center = offset, blendMode = BlendMode.Plus)
+        drawPath(segment, fillBrush, style = progressPathStroke.get())
     }
 }
 
 private fun Path.setToSineWaveLike(size: Size) {
+    if (isEmpty.not()) reset()
     val center = size.center
     val amplitude = size.height / 10f
     val start = Offset(center.x, amplitude / 2f)

@@ -142,10 +142,10 @@ private fun HansieHand(locale: Locale, style: TextStyle, type: HansieHandType) {
 
 enum class HansieHandType(val factor: Float) {
     Hour(30f) {
-        override fun handValue(current: CurrentTime): Float = current.hourWithMinutes
+        override fun handValue(current: CurrentTime): Float = current.hours.toFloat()
     },
     Minute(6f) {
-        override fun handValue(current: CurrentTime): Float = current.minutesWithSeconds
+        override fun handValue(current: CurrentTime): Float = current.minutes.toFloat()
     },
     Second(6f) {
         override fun handValue(current: CurrentTime): Float = current.seconds.toFloat()

@@ -50,7 +50,7 @@ private fun HansieBackground() {
 @Composable
 private fun HansieHoursHand(locale: Locale) {
     val style = remember {
-        TextStyle.Default.copy(
+        TextStyle(
             fontSize = 26.sp,
             fontWeight = FontWeight.W600,
             color = Color.White
@@ -62,7 +62,7 @@ private fun HansieHoursHand(locale: Locale) {
 @Composable
 private fun HansieMinutesHand(locale: Locale) {
     val style = remember {
-        TextStyle.Default.copy(
+        TextStyle(
             fontSize = 26.sp,
             fontWeight = FontWeight.W400,
             color = Color.DarkGray.copy(alpha = 0.8f),
@@ -79,7 +79,7 @@ private fun HansieMinutesHand(locale: Locale) {
 @Composable
 private fun HansieSecondsHand(locale: Locale) {
     val style = remember {
-        TextStyle.Default.copy(
+        TextStyle(
             fontSize = 14.sp,
             fontWeight = FontWeight.W200,
             color = Color.LightGray.copy(alpha = 0.6f),

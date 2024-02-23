@@ -60,7 +60,7 @@ fun TextOnPathExperiment(finalBrush: Brush) {
         value = if (result.isSuccess) finalBrush else Brush.linearGradient(listOf(Color.Red))
     }
     val textStyle = remember(fontFamily, brush) {
-        TextStyle.Default.copy(
+        TextStyle(
             brush = null,
             fontFamily = fontFamily,
             fontSize = 16.sp,

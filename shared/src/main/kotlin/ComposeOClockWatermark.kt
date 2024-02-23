@@ -49,7 +49,7 @@ fun ComposeOClockWatermark(finalBrush: Brush) {
         value = if (result.isSuccess) finalBrush else Brush.linearGradient(listOf(Color.Red))
     }
     val interactiveTextStyle = remember(fontFamily, brush) {
-        TextStyle.Default.copy(
+        TextStyle(
             brush = brush,
             fontFamily = fontFamily,
             fontSize = 16.sp,

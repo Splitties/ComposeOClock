@@ -1,6 +1,10 @@
 [versions]
 composeOClock = "0.1.0-SNAPSHOT"
+roborazzi = "1.10.1"
 
 [libraries]
 compose-oclock-core = { group = "org.splitties.compose.oclock", name = "core", version.ref = "composeOClock" }
 compose-oclock-watchface-renderer = { group = "org.splitties.compose.oclock", name = "watchface-renderer", version.ref = "composeOClock" }
+roborazzi = { group = "io.github.takahirom.roborazzi", name = "roborazzi", version.ref = "roborazzi" }
+roborazzi-compose = { group = "io.github.takahirom.roborazzi", name = "roborazzi-compose", version.ref = "roborazzi" }
+roborazzi-rule = { group = "io.github.takahirom.roborazzi", name = "roborazzi-junit-rule", version.ref = "roborazzi" }

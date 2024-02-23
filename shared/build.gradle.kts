@@ -1,7 +1,10 @@
+@file:Suppress("UnstableApiUsage")
+
 import de.fayard.refreshVersions.core.versionFor
 
 plugins {
     id("android-lib")
+    alias(libs.plugins.roborazzi)
 }
 
 android {
@@ -20,6 +23,12 @@ android {
     }
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
+    }
+
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
     }
 }
 
@@ -44,9 +53,17 @@ dependencies {
     }
     debugImplementation {
         AndroidX.compose.ui.tooling() //Important so previews can work.
+        AndroidX.compose.ui.testManifest() // import for tests
     }
     testImplementation {
         Testing.junit4()
+        Testing.robolectric()
+        AndroidX.test.ext.junit.ktx()
+        AndroidX.test.runner()
+        AndroidX.compose.ui.testJunit4()
+        libs.roborazzi()
+        libs.roborazzi.compose()
+        libs.roborazzi.rule()
     }
     androidTestImplementation {
         AndroidX.test.ext.junit.ktx()

@@ -274,11 +274,14 @@ fun rememberDrawableAsState(
 
 Compose O'Clock has a dual license:
 
-It's free to use in debug apps, and you are free to use the dependency in any project that is compatible with the Apache 2.0 license.
+It's free to use in debuggable apps, and you are free to use the dependency in any project that is compatible with the Apache 2.0 license, like this sample repository.
 
-However, releasing an app using Compose O'Clock requires a commercial license.
+Release apps using Compose O'Clock require a commercial license.
 
-If you want to release a Watch Face app for Wear OS that uses Compose O'Clock, please send an email to [composeoclock@splitties.org](mailto:composeoclock@splitties.org)
+The pricing model is based on a share of the Watch Face revenue.
+_For special cases, a custom contract can be negotiated._
+
+To get in touch and get a license, send an email to [composeoclock@splitties.org](mailto:composeoclock@splitties.org).
 
 ## Why Compose O'Clock?
 

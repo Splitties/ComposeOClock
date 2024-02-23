@@ -1,3 +1,7 @@
+[plugins]
+
+roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
+
 [versions]
 composeOClock = "0.1.0-SNAPSHOT"
 roborazzi = "1.10.1"

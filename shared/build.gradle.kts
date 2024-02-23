@@ -4,7 +4,7 @@ import de.fayard.refreshVersions.core.versionFor
 
 plugins {
     id("android-lib")
-    id("io.github.takahirom.roborazzi")
+    alias(libs.plugins.roborazzi)
 }
 
 android {

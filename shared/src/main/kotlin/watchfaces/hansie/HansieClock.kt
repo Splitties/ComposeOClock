@@ -1,5 +1,3 @@
-@file:OptIn(InternalComposeOClockApi::class)
-
 package org.splitties.compose.oclock.sample.watchfaces.hansie
 
 import android.icu.text.MessageFormat
@@ -51,8 +49,6 @@ private fun HansieBackground() {
 
 @Composable
 private fun HansieHoursHand(locale: Locale) {
-    val time = LocalTime.current
-
     val style = remember {
         TextStyle.Default.copy(
             fontSize = 26.sp,
@@ -60,8 +56,6 @@ private fun HansieHoursHand(locale: Locale) {
             color = Color.White
         )
     }
-    val handValue = time.hours
-
     HansieHand(locale, style, HansieHandType.Hour)
 }
 
@@ -84,8 +78,6 @@ private fun HansieMinutesHand(locale: Locale) {
 
 @Composable
 private fun HansieSecondsHand(locale: Locale) {
-    val time = LocalTime.current
-
     val style = remember {
         TextStyle.Default.copy(
             fontSize = 14.sp,
@@ -102,26 +94,26 @@ private fun HansieSecondsHand(locale: Locale) {
 }
 
 @Composable
-private fun HansieHand(locale: Locale, style: TextStyle, type: HansieHandType) {
-    val handValue = type.handValue(LocalTime.current)
-    val handValueInt = handValue.toInt()
+private fun HansieHand(
+    locale: Locale,
+    style: TextStyle,
+    type: HansieHandType
+) {
+    val time = LocalTime.current
 
-    val degrees = (handValue * type.factor) - 90f
-
-    val timeFormatter = remember {
+    val timeFormatter = remember(locale) {
         MessageFormat(
             "{0,spellout,full}",
             locale
         )
     }
+    @OptIn(InternalComposeOClockApi::class)
     val measurer = LocalTextMeasurerWithoutCache.current
 
-    val timeText = remember(handValueInt) {
-        timeFormatter.format(arrayOf(handValueInt))
-    }
-
-    val textLayoutResult by remember(timeText) {
+    val textLayoutResult by remember(timeFormatter) {
         derivedStateOf {
+            val handValueInt = type.handValue(time).toInt()
+            val timeText = timeFormatter.format(arrayOf(handValueInt))
             measurer.measure(
                 timeText,
                 style
@@ -130,6 +122,8 @@ private fun HansieHand(locale: Locale, style: TextStyle, type: HansieHandType) {
     }
 
     OClockCanvas {
+        val handValue = type.handValue(time)
+        val degrees = (handValue * type.factor) - 90f
         rotate(degrees = degrees) {
             drawText(
                 brush = style.brush ?: SolidColor(style.color),

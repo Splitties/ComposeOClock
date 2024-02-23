@@ -1,11 +1,15 @@
 package org.splitties.compose.oclock.sample.watchfaces
 
+import kotlin.math.roundToInt
+
 data class WearDevice(
     val id: String,
     val modelName: String,
     val px: Int,
     val density: Float
 ) {
+    val dp: Int = (px / density).roundToInt()
+
     companion object {
         val MobvoiTicWatchPro5: WearDevice = WearDevice(
             id = "ticwatch_pro_5",

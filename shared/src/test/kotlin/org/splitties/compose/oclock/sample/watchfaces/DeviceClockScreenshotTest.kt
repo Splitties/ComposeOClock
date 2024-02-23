@@ -17,7 +17,7 @@ abstract class DeviceClockScreenshotTest(override val device: WearDevice): Clock
     }
 
     @Test
-    fun ambient() = runTest {
+    fun ambient() = runTest(isAmbient = true) {
         Clock()
     }
 

@@ -46,7 +46,7 @@ fun ComposeOClockWatermark(finalBrush: Brush) {
         val result = runCatching {
             font.typefaceLoader.awaitLoad(context, font)
         }
-        value = if (result.isSuccess) finalBrush else Brush.linearGradient(listOf(Color.Red))
+        value = if (result.isSuccess) finalBrush else SolidColor(Color.Red)
     }
     val interactiveTextStyle = remember(fontFamily, brush) {
         TextStyle.Default.copy(

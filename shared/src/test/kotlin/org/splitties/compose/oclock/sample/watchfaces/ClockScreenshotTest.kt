@@ -12,6 +12,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
+import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 import org.splitties.compose.oclock.OClockRootCanvas
@@ -28,6 +29,8 @@ abstract class ClockScreenshotTest {
     abstract val device: WearDevice
 
     fun runTest(isAmbient: Boolean = false, clock: @Composable () -> Unit) {
+        RuntimeEnvironment.setQualifiers("+w${device.dp}dp-h${device.dp}dp")
+
         composeRule.setContent {
             OClockRootCanvas(
                 modifier = Modifier.fillMaxSize(), isAmbientFlow = MutableStateFlow(isAmbient)
@@ -37,6 +40,6 @@ abstract class ClockScreenshotTest {
         }
 
         composeRule.onRoot()
-            .captureRoboImage("src/test/screenshots/${this.javaClass.simpleName}_${device.id}${if (isAmbient) "_interactive" else ""}.png")
+            .captureRoboImage("src/test/screenshots/${this.javaClass.simpleName}_${device.id}${if (isAmbient) "_ambient" else ""}.png")
     }
 }

@@ -37,6 +37,6 @@ class HansieClockTest {
 
         composeRule
             .onRoot()
-            .captureRoboImage()
+            .captureRoboImage("src/test/screenshots/hansie_227_interactive.png")
     }
 }

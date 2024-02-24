@@ -4,6 +4,7 @@
 
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.actions.actions.SetupJavaV4
+import io.github.typesafegithub.workflows.actions.actions.UploadArtifactV4
 import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV3
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.PullRequest
@@ -23,12 +24,23 @@ workflow(
         uses(name = "Check out", action = CheckoutV4())
         uses(
             name = "Setup Java",
-            action = SetupJavaV4(distribution = SetupJavaV4.Distribution.Temurin, javaVersion = "17")
+            action = SetupJavaV4(
+                distribution = SetupJavaV4.Distribution.Temurin,
+                javaVersion = "17"
+            )
         )
         uses(
             name = "Build",
             action = GradleBuildActionV3(
                 arguments = "test",
+            )
+        )
+        uses(
+            name = "Upload reports",
+            action = UploadArtifactV4(
+                name = "Roborazzi",
+                path = listOf("app/build/outputs/roborazzi"),
+                retentionDays = UploadArtifactV4.RetentionPeriod.Default,
             )
         )
     }

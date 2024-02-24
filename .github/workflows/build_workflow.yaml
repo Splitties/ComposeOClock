@@ -41,3 +41,10 @@ jobs:
       uses: 'gradle/gradle-build-action@v3'
       with:
         arguments: 'test'
+    - id: 'step-3'
+      name: 'Upload reports'
+      uses: 'actions/upload-artifact@v4'
+      with:
+        name: 'Roborazzi'
+        path: 'app/build/outputs/roborazzi'
+        retention-days: '0'

@@ -34,7 +34,7 @@ abstract class ClockScreenshotTest {
     abstract val device: WearDevice
 
     // generous to allow for mac/linux differences
-    open val tolerance = 0.05f
+    open val tolerance = 0.01f
 
     open val roborazziOptions: RoborazziOptions
         get() = RoborazziOptions(

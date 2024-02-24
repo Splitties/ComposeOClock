@@ -7,16 +7,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onRoot
-import com.github.takahirom.roborazzi.BuildConfig
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.RoborazziOptions
 import com.github.takahirom.roborazzi.ThresholdValidator
 import com.github.takahirom.roborazzi.captureRoboImage
+import com.louiscad.composeoclockplayground.shared.BuildConfig
 import kotlinx.coroutines.flow.MutableStateFlow
+import org.junit.Assume
 import org.junit.Assume.assumeFalse
-import org.junit.Assume.assumeTrue
 import org.junit.Before
 import org.junit.Rule
+import org.junit.rules.TestRule
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
@@ -29,8 +30,14 @@ import java.io.File
 )
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 abstract class ClockScreenshotTest {
+    @get:Rule(order = 0)
+    val debugOnly = TestRule { base, _ ->
+        Assume.assumeTrue("Screenshot tests not supported for release", BuildConfig.DEBUG)
 
-    @get:Rule
+        base
+    }
+
+    @get:Rule(order = 1)
     val composeRule = createComposeRule()
 
     abstract val device: WearDevice
@@ -49,8 +56,6 @@ abstract class ClockScreenshotTest {
     fun check() {
         // https://github.com/robolectric/robolectric/issues/8312
         assumeFalse("Robolectric RNG not supported on Windows", System.getProperty("os.name")?.startsWith("Windows") ?: false)
-
-        assumeTrue("Screenshot tests not supported for release", BuildConfig.DEBUG)
     }
 
     fun runTest(isAmbient: Boolean = false, clock: @Composable () -> Unit) {

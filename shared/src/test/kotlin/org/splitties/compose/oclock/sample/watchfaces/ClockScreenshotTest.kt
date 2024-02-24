@@ -7,19 +7,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onRoot
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.RoborazziOptions
 import com.github.takahirom.roborazzi.ThresholdValidator
 import com.github.takahirom.roborazzi.captureRoboImage
 import kotlinx.coroutines.flow.MutableStateFlow
-import org.junit.Assume
 import org.junit.Assume.assumeFalse
 import org.junit.Before
 import org.junit.Rule
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
@@ -38,12 +33,15 @@ abstract class ClockScreenshotTest {
 
     abstract val device: WearDevice
 
-    open val roborazziOptions: RoborazziOptions = RoborazziOptions(
-        compareOptions = RoborazziOptions.CompareOptions(
-            // generous to allow for mac/linux differences
-            resultValidator = ThresholdValidator(0.01f)
+    // generous to allow for mac/linux differences
+    open val tolerance = 0.01f
+
+    open val roborazziOptions: RoborazziOptions
+        get() = RoborazziOptions(
+            compareOptions = RoborazziOptions.CompareOptions(
+                resultValidator = ThresholdValidator(tolerance)
+            )
         )
-    )
 
     @Before
     fun check() {

@@ -24,8 +24,6 @@ jobs:
       run: 'git diff --exit-code ''.github/workflows/build_workflow.yaml'''
   build-and-test:
     runs-on: 'ubuntu-latest'
-    permissions:
-      checks: 'write'
     needs:
     - 'check_yaml_consistency'
     steps:

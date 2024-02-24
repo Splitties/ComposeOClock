@@ -6,10 +6,7 @@ import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.actions.actions.SetupJavaV4
 import io.github.typesafegithub.workflows.actions.actions.UploadArtifactV4
 import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV3
-import io.github.typesafegithub.workflows.domain.Mode
-import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
-import io.github.typesafegithub.workflows.domain.actions.CustomAction
 import io.github.typesafegithub.workflows.domain.triggers.PullRequest
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.expr
@@ -26,8 +23,7 @@ workflow(
 ) {
     job(
         id = "build-and-test",
-        runsOn = UbuntuLatest,
-        permissions = mapOf(Permission.Checks to Mode.Write)
+        runsOn = UbuntuLatest
     ) {
         uses(name = "Check out", action = CheckoutV4())
         uses(

@@ -56,6 +56,6 @@ jobs:
       uses: 'actions/upload-artifact@v4'
       with:
         name: 'Junit'
-        path: '**/build/test-results'
+        path: '**/build/reports/tests'
         retention-days: '0'
       if: '${{ always() }}'

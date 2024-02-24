@@ -56,23 +56,10 @@ workflow(
             name = "Upload test reports",
             action = UploadArtifactV4(
                 name = "Junit",
-                path = listOf("**/build/test-results"),
+                path = listOf("**/build/reports/tests"),
                 retentionDays = UploadArtifactV4.RetentionPeriod.Default,
             ),
             `if` = expr { always() }
         )
-        // TODO enable on main
-//        uses(
-//            name = "Upload test reports",
-//            action = CustomAction(
-//                actionOwner = "mikepenz",
-//                actionName = "action-junit-report",
-//                actionVersion = "v4",
-//                inputs = mapOf(
-//                    "report_paths" to "**/build/test-results/**/TEST-*.xml",
-//                )
-//            ),
-//            `if` = expr { failure() }
-//        )
     }
 }.writeToFile()

@@ -8,6 +8,9 @@ import androidx.compose.ui.test.onRoot
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.takahirom.roborazzi.captureRoboImage
 import kotlinx.coroutines.flow.MutableStateFlow
+import org.junit.Assume
+import org.junit.Assume.assumeFalse
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -27,6 +30,13 @@ abstract class ClockScreenshotTest {
     val composeRule = createComposeRule()
 
     abstract val device: WearDevice
+
+    @Before
+    fun check() {
+        // Robolectric RNG not supported on Windows
+        // https://github.com/robolectric/robolectric/issues/8312
+        assumeFalse(System.getProperty("os.name")?.startsWith("Windows") ?: false)
+    }
 
     fun runTest(isAmbient: Boolean = false, clock: @Composable () -> Unit) {
         RuntimeEnvironment.setQualifiers("+w${device.dp}dp-h${device.dp}dp")

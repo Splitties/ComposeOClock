@@ -7,6 +7,7 @@ import io.github.typesafegithub.workflows.actions.actions.SetupJavaV4
 import io.github.typesafegithub.workflows.actions.actions.UploadArtifactV4
 import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV3
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
+import io.github.typesafegithub.workflows.domain.actions.CustomAction
 import io.github.typesafegithub.workflows.domain.triggers.PullRequest
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.expr
@@ -44,6 +45,19 @@ workflow(
                 retentionDays = UploadArtifactV4.RetentionPeriod.Default,
             ),
             `if` = expr { always() }
+        )
+        uses(
+            name = "Upload test reports",
+            action = CustomAction(
+                actionOwner = "dorny",
+                actionName = "test-reporter",
+                actionVersion = "1.8.0",
+                inputs = mapOf(
+                    "path" to "**/build/test-results/test/TEST-*.xml",
+                    "reporter" to "java-junit"
+                )
+            ),
+            `if` = expr { failure() }
         )
     }
 }.writeToFile()

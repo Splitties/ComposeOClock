@@ -49,3 +49,10 @@ jobs:
         path: 'shared/build/outputs/roborazzi'
         retention-days: '0'
       if: '${{ always() }}'
+    - id: 'step-4'
+      name: 'Upload test reports'
+      uses: 'dorny/test-reporter@1.8.0'
+      with:
+        path: '**/build/test-results/test/TEST-*.xml'
+        reporter: 'java-junit'
+      if: '${{ failure() }}'

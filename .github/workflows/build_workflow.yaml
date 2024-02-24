@@ -54,6 +54,6 @@ jobs:
       uses: 'dorny/test-reporter@v1.8.0'
       with:
         name: 'Junit results'
-        path: '**/build/test-results/test/TEST-*.xml'
+        path: '**/build/test-results/**/TEST-*.xml'
         reporter: 'java-junit'
       if: '${{ failure() }}'

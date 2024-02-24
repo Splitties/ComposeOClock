@@ -54,7 +54,7 @@ workflow(
                 actionVersion = "v1.8.0",
                 inputs = mapOf(
                     "name" to "Junit results",
-                    "path" to "**/build/test-results/test/TEST-*.xml",
+                    "path" to "**/build/test-results/**/TEST-*.xml",
                     "reporter" to "java-junit"
                 )
             ),

@@ -5,6 +5,7 @@
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.actions.actions.SetupJavaV4
 import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV3
+import io.github.typesafegithub.workflows.actions.stefanzweifel.GitAutoCommitActionV5
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.PullRequest
 import io.github.typesafegithub.workflows.domain.triggers.Push
@@ -30,6 +31,14 @@ workflow(
             name = "Record Screenshots",
             action = GradleBuildActionV3(
                 arguments = "recordRoborazziDebug",
+            )
+        )
+        uses(
+            name = "Commit Screenshots",
+            action = GitAutoCommitActionV5(
+                filePattern = "**/src/test/screenshots/*.png",
+                disableGlobbing = true,
+                commitMessage = "🤖 Updates screenshots"
             )
         )
     }

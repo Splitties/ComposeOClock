@@ -8,6 +8,7 @@ import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV3
 import io.github.typesafegithub.workflows.actions.stefanzweifel.GitAutoCommitActionV5
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.WorkflowDispatch
+import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
 import io.github.typesafegithub.workflows.yaml.writeToFile
 
@@ -24,7 +25,7 @@ workflow(
         // Ensure no auto-commits are ever made on the main/default branch.
         // This is an extra security measure, especially since we don't control what the
         // "stefanzweifel/git-auto-commit-action@v5" GitHub Action could theoretically do.
-        `if` = "github.ref_name != github.event.repository.default_branch"
+        `if` = expr { github.ref_name + " != " + github.eventWorkflowDispatch.repository.default_branch }
     ) {
         uses(name = "Check out", action = CheckoutV4())
         uses(

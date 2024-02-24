@@ -48,4 +48,4 @@ jobs:
         name: 'Roborazzi'
         path: 'shared/build/outputs/roborazzi'
         retention-days: '0'
-      if: 'always()'
+      if: '${{ always() }}'

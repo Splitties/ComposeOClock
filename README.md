@@ -333,5 +333,5 @@ will be used for ambient mode or energy saver mode (which will make sense once t
 
 ## Credits
 
-Thanks to [Yuri Schimke](https://github.com/yschimke) for encouraging me to try making a Compose API for Watch Faces, and for all the helpful input! And thanks for the PRs on this repo, too🙏❤️
-Thanks to [Romain Guy](https://github.com/romainguy) for providing helpful clarifications and sharing me his very deep and accurate knowledge on graphics programming.
+- Thanks to [Yuri Schimke](https://github.com/yschimke) for encouraging me to try making a Compose API for Watch Faces, and for all the helpful input! And thanks for the PRs on this repo, too🙏❤️
+- Thanks to [Romain Guy](https://github.com/romainguy) for providing helpful clarifications and sharing me his very deep and accurate knowledge on graphics programming.

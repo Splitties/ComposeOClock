@@ -33,6 +33,8 @@ abstract class ClockScreenshotTest {
 
     @Before
     fun check() {
+        // Robolectric RNG not supported on Windows
+        // https://github.com/robolectric/robolectric/issues/8312
         assumeFalse(System.getProperty("os.name")?.startsWith("Windows") ?: false)
     }
 

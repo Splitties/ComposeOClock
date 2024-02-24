@@ -51,7 +51,7 @@ workflow(
             action = CustomAction(
                 actionOwner = "dorny",
                 actionName = "test-reporter",
-                actionVersion = "1.8.0",
+                actionVersion = "v1.8.0",
                 inputs = mapOf(
                     "path" to "**/build/test-results/test/TEST-*.xml",
                     "reporter" to "java-junit"

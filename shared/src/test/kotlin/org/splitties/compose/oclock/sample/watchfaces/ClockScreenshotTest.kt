@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalRoborazziApi::class)
+
 package org.splitties.compose.oclock.sample.watchfaces
 
 import androidx.compose.foundation.layout.fillMaxSize
@@ -6,6 +8,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onRoot
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
+import com.github.takahirom.roborazzi.RoborazziOptions
+import com.github.takahirom.roborazzi.ThresholdValidator
 import com.github.takahirom.roborazzi.captureRoboImage
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.junit.Assume
@@ -19,6 +24,7 @@ import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 import org.splitties.compose.oclock.OClockRootCanvas
+import java.io.File
 
 @Config(
     sdk = [33],
@@ -26,10 +32,18 @@ import org.splitties.compose.oclock.OClockRootCanvas
 )
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 abstract class ClockScreenshotTest {
+
     @get:Rule
     val composeRule = createComposeRule()
 
     abstract val device: WearDevice
+
+    open val roborazziOptions: RoborazziOptions = RoborazziOptions(
+        compareOptions = RoborazziOptions.CompareOptions(
+            // generous to allow for mac/linux differences
+            resultValidator = ThresholdValidator(0.1f)
+        )
+    )
 
     @Before
     fun check() {
@@ -39,6 +53,9 @@ abstract class ClockScreenshotTest {
     }
 
     fun runTest(isAmbient: Boolean = false, clock: @Composable () -> Unit) {
+        val filePath =
+            File("src/test/screenshots/${this.javaClass.simpleName}_${device.id}${if (isAmbient) "_ambient" else ""}.png")
+
         RuntimeEnvironment.setQualifiers("+w${device.dp}dp-h${device.dp}dp")
 
         composeRule.setContent {
@@ -50,6 +67,6 @@ abstract class ClockScreenshotTest {
         }
 
         composeRule.onRoot()
-            .captureRoboImage("src/test/screenshots/${this.javaClass.simpleName}_${device.id}${if (isAmbient) "_ambient" else ""}.png")
+            .captureRoboImage(filePath = filePath.path, roborazziOptions = roborazziOptions)
     }
 }

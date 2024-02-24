@@ -34,7 +34,7 @@ workflow(
         uses(
             name = "Record Screenshots",
             action = GradleBuildActionV3(
-                arguments = "recordRoborazziDebug",
+                arguments = "verifyAndRecordRoborazziDebug",
             )
         )
         uses(

@@ -38,7 +38,7 @@ jobs:
       name: 'Record Screenshots'
       uses: 'gradle/gradle-build-action@v3'
       with:
-        arguments: 'recordRoborazziDebug'
+        arguments: 'verifyAndRecordRoborazziDebug'
     - id: 'step-3'
       name: 'Commit Screenshots'
       uses: 'stefanzweifel/git-auto-commit-action@v5'

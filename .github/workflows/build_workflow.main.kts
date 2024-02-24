@@ -39,7 +39,7 @@ workflow(
             name = "Upload reports",
             action = UploadArtifactV4(
                 name = "Roborazzi",
-                path = listOf("app/build/outputs/roborazzi"),
+                path = listOf("shared/build/outputs/roborazzi"),
                 retentionDays = UploadArtifactV4.RetentionPeriod.Default,
             )
         )

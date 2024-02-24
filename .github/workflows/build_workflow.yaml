@@ -53,7 +53,9 @@ jobs:
       if: '${{ always() }}'
     - id: 'step-4'
       name: 'Upload test reports'
-      uses: 'mikepenz/action-junit-report@v4'
+      uses: 'actions/upload-artifact@v4'
       with:
-        report_paths: '**/build/test-results/**/TEST-*.xml'
-      if: '${{ failure() }}'
+        name: 'Junit'
+        path: '**/build/test-results'
+        retention-days: '0'
+      if: '${{ always() }}'

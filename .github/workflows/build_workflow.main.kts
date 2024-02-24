@@ -53,6 +53,7 @@ workflow(
                 actionName = "test-reporter",
                 actionVersion = "v1.8.0",
                 inputs = mapOf(
+                    "name" to "Junit results",
                     "path" to "**/build/test-results/test/TEST-*.xml",
                     "reporter" to "java-junit"
                 )

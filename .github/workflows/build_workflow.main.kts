@@ -41,7 +41,8 @@ workflow(
                 name = "Roborazzi",
                 path = listOf("shared/build/outputs/roborazzi"),
                 retentionDays = UploadArtifactV4.RetentionPeriod.Default,
-            )
+            ),
+            `if` = "always()"
         )
     }
 }.writeToFile()

@@ -104,8 +104,8 @@ private fun SecondsHand() {
 
 ### One canvas for all by default
 
-`OClockCanvas` is actually a bit more powerful than `Canvas`:
-All `OClockCanvas` will share the same underlying canvas, without layering by default,
+`OClockCanvas` works just like `Canvas`:
+All `OClockCanvas` will draw on the same backing canvas,
 which means that if you use a `BlendMode`, it will apply over everything that has been drawn yet.
 
 It can have multiple use cases, like:
@@ -333,4 +333,5 @@ will be used for ambient mode or energy saver mode (which will make sense once t
 
 ## Credits
 
-Thanks to [Yuri Schimke](https://github.com/yschimke) for encouraging me to try making a Compose API for Watch Faces, and for all the helpful input! 🙏❤️
+Thanks to [Yuri Schimke](https://github.com/yschimke) for encouraging me to try making a Compose API for Watch Faces, and for all the helpful input! And thanks for the PRs on this repo, too🙏❤️
+Thanks to [Romain Guy](https://github.com/romainguy) for providing helpful clarifications and sharing me his very deep and accurate knowledge on graphics programming.

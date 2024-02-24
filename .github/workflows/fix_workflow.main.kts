@@ -25,7 +25,7 @@ workflow(
         uses(name = "Check out", action = CheckoutV4())
         uses(
             name = "Setup Java",
-            action = SetupJavaV4(distribution = SetupJavaV4.Distribution.Adopt, javaVersion = "17")
+            action = SetupJavaV4(distribution = SetupJavaV4.Distribution.Temurin, javaVersion = "17")
         )
         uses(
             name = "Record Screenshots",

@@ -33,7 +33,7 @@ jobs:
       uses: 'actions/setup-java@v4'
       with:
         java-version: '17'
-        distribution: 'adopt'
+        distribution: 'temurin'
     - id: 'step-2'
       name: 'Record Screenshots'
       uses: 'gradle/gradle-build-action@v3'

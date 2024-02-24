@@ -41,7 +41,7 @@ abstract class ClockScreenshotTest {
     open val roborazziOptions: RoborazziOptions = RoborazziOptions(
         compareOptions = RoborazziOptions.CompareOptions(
             // generous to allow for mac/linux differences
-            resultValidator = ThresholdValidator(0.1f)
+            resultValidator = ThresholdValidator(0.01f)
         )
     )
 

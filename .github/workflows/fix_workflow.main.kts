@@ -18,7 +18,14 @@ workflow(
     ),
     sourceFile = __FILE__.toPath(),
 ) {
-    job(id = "fix-branch", runsOn = UbuntuLatest, `if` = "github.ref_name != github.event.repository.default_branch") {
+    job(
+        id = "fix-branch",
+        runsOn = UbuntuLatest,
+        // Ensure no auto-commits are ever made on the main/default branch.
+        // This is an extra security measure, especially since we don't control what the
+        // "stefanzweifel/git-auto-commit-action@v5" GitHub Action could theoretically do.
+        `if` = "github.ref_name != github.event.repository.default_branch"
+    ) {
         uses(name = "Check out", action = CheckoutV4())
         uses(
             name = "Setup Java",

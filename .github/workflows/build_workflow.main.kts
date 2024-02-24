@@ -6,6 +6,8 @@ import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.actions.actions.SetupJavaV4
 import io.github.typesafegithub.workflows.actions.actions.UploadArtifactV4
 import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV3
+import io.github.typesafegithub.workflows.domain.Mode
+import io.github.typesafegithub.workflows.domain.Permission
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.actions.CustomAction
 import io.github.typesafegithub.workflows.domain.triggers.PullRequest
@@ -22,7 +24,11 @@ workflow(
     ),
     sourceFile = __FILE__.toPath(),
 ) {
-    job(id = "build-and-test", runsOn = UbuntuLatest) {
+    job(
+        id = "build-and-test",
+        runsOn = UbuntuLatest,
+        permissions = mapOf(Permission.Checks to Mode.Write)
+    ) {
         uses(name = "Check out", action = CheckoutV4())
         uses(
             name = "Setup Java",
@@ -49,13 +55,11 @@ workflow(
         uses(
             name = "Upload test reports",
             action = CustomAction(
-                actionOwner = "dorny",
-                actionName = "test-reporter",
-                actionVersion = "v1.8.0",
+                actionOwner = "mikepenz",
+                actionName = "action-junit-report",
+                actionVersion = "v4",
                 inputs = mapOf(
-                    "name" to "Junit results",
-                    "path" to "**/build/test-results/**/TEST-*.xml",
-                    "reporter" to "java-junit"
+                    "report_paths" to "**/build/test-results/**/TEST-*.xml",
                 )
             ),
             `if` = expr { failure() }

@@ -24,6 +24,8 @@ jobs:
       run: 'git diff --exit-code ''.github/workflows/build_workflow.yaml'''
   build-and-test:
     runs-on: 'ubuntu-latest'
+    permissions:
+      checks: 'write'
     needs:
     - 'check_yaml_consistency'
     steps:
@@ -51,9 +53,7 @@ jobs:
       if: '${{ always() }}'
     - id: 'step-4'
       name: 'Upload test reports'
-      uses: 'dorny/test-reporter@v1.8.0'
+      uses: 'mikepenz/action-junit-report@v4'
       with:
-        name: 'Junit results'
-        path: '**/build/test-results/**/TEST-*.xml'
-        reporter: 'java-junit'
+        report_paths: '**/build/test-results/**/TEST-*.xml'
       if: '${{ failure() }}'

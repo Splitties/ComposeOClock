@@ -46,4 +46,5 @@ include {
     "app-phone"()
     "app-watch"()
     "shared"()
+    "app-watch-benchmark"()
 }

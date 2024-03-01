@@ -71,6 +71,35 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".samples.HansieWatchFaceService"
+            android:directBootAware="true"
+            android:exported="true"
+            android:label="Hansie"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+                <category android:name="com.google.android.wearable.watchface.category.WATCH_FACE" />
+            </intent-filter>
+
+            <!--            <meta-data-->
+            <!--                android:name="com.google.android.wearable.watchface.preview"-->
+            <!--                android:resource="@drawable/watch_preview" />-->
+            <meta-data
+                android:name="com.google.android.wearable.watchface.preview_circular"
+                android:resource="@drawable/watch_preview" />
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/watch_face" />
+            <meta-data
+                android:name="com.google.android.wearable.watchface.wearableConfigurationAction"
+                android:value="androidx.wear.watchface.editor.action.WATCH_FACE_EDITOR" />
+            <!--<meta-data
+                android:name="com.google.android.wearable.watchface.companionConfigurationAction"
+                android:value="androidx.wear.watchface.editor.action.WATCH_FACE_EDITOR" />-->
+
+        </service>
     </application>
 
 </manifest>

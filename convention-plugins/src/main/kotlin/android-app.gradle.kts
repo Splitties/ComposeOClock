@@ -58,6 +58,14 @@ android {
                 "proguard-rules.pro"
             )
         }
+        create("benchmark") {
+            initWith(buildTypes.getByName("release"))
+            matchingFallbacks += "release"
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-benchmark.pro"
+            )
+        }
     }
     kotlinOptions {
         freeCompilerArgs += "-opt-in=splitties.experimental.ExperimentalSplittiesApi"

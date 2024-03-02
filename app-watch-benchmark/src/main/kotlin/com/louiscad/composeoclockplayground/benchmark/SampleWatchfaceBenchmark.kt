@@ -2,9 +2,9 @@ package com.louiscad.composeoclockplayground.benchmark
 
 import android.content.ComponentName
 
-class HansieWatchfaceBenchmark : WatchFaceBenchmark() {
+class SampleWatchfaceBenchmark : WatchFaceBenchmark() {
     override val watchfaceComponent: ComponentName = ComponentName(
         PACKAGE_NAME,
-        "com.louiscad.composeoclockplayground.samples.HansieWatchFaceService"
+        "com.louiscad.composeoclockplayground.SampleWatchFaceService"
     )
 }

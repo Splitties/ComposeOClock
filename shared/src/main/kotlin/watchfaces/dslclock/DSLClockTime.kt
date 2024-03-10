@@ -21,12 +21,11 @@ import org.splitties.compose.oclock.OClockCanvas
 import org.splitties.compose.oclock.internal.InternalComposeOClockApi
 import org.splitties.compose.oclock.sample.WatchFacePreview
 import org.splitties.compose.oclock.sample.WearPreviewSizesProvider
-import org.splitties.compose.oclock.sample.extensions.rotate
 
 @Composable
 fun DSLClockTime() {
 
-    val style = remember {
+    val textStyle = remember {
         TextStyle(
             color = Color.White,
             fontFamily = FontFamily.Monospace,
@@ -35,11 +34,11 @@ fun DSLClockTime() {
     }
 
     Background()
-    TimeAndOpenParentheses(style)
-    Hours(style)
-    Minutes(style)
-    Seconds(style)
-    CloseParentheses(style)
+    TimeAndOpenParentheses(textStyle)
+    Hours(textStyle)
+    Minutes(textStyle)
+    Seconds(textStyle)
+    CloseParentheses(textStyle)
 
 }
 
@@ -53,7 +52,7 @@ private fun Background() {
 }
 
 @Composable
-private fun TimeAndOpenParentheses(style: TextStyle) {
+private fun TimeAndOpenParentheses(textStyle: TextStyle) {
 
     @OptIn(InternalComposeOClockApi::class)
     val measurer = LocalTextMeasurerWithoutCache.current
@@ -62,53 +61,51 @@ private fun TimeAndOpenParentheses(style: TextStyle) {
         derivedStateOf {
             measurer.measure(
                 "time {",
-                style
+                textStyle
             )
         }
     }
 
     OClockCanvas {
-        rotate(degrees = 0f) {
-            drawText(
-                brush = style.brush ?: SolidColor(style.color),
-                textLayoutResult = textLayoutResult,
-                topLeft = Offset(x = 60f, y = (center.y * 0.55f) - (textLayoutResult.size.height / 2f))
-            )
-        }
+        drawText(
+            brush = textStyle.brush ?: SolidColor(textStyle.color),
+            textLayoutResult = textLayoutResult,
+            topLeft = Offset(x = center.x * 0.25f, y = (center.y * 0.55f) - (textLayoutResult.size.height / 2f))
+        )
     }
 }
 
 @Composable
-private fun Hours(style: TextStyle) {
+private fun Hours(textStyle: TextStyle) {
 
     DSLTimeValue(
-        style = style,
+        textStyle = textStyle,
         timeType = TimeParamType.Hour,
     )
 }
 
 
 @Composable
-private fun Minutes(style: TextStyle) {
+private fun Minutes(textStyle: TextStyle) {
 
     DSLTimeValue(
-        style = style,
+        textStyle = textStyle,
         timeType = TimeParamType.Minute,
     )
 }
 
 @Composable
-private fun Seconds(style: TextStyle) {
+private fun Seconds(textStyle: TextStyle) {
 
     DSLTimeValue(
-        style = style,
+        textStyle = textStyle,
         timeType = TimeParamType.Second,
     )
 }
 
 
 @Composable
-private fun CloseParentheses(style: TextStyle) {
+private fun CloseParentheses(textStyle: TextStyle) {
     @OptIn(InternalComposeOClockApi::class)
     val measurer = LocalTextMeasurerWithoutCache.current
 
@@ -116,26 +113,24 @@ private fun CloseParentheses(style: TextStyle) {
         derivedStateOf {
             measurer.measure(
                 "}",
-                style
+                textStyle
             )
         }
     }
 
     OClockCanvas {
-        rotate(degrees = 0f) {
-            drawText(
-                brush = style.brush ?: SolidColor(style.color),
-                textLayoutResult = textLayoutResult,
-                topLeft = Offset(x = 60f, y = size.height - (center.y * 0.55f)  - (textLayoutResult.size.height / 2f))
-            )
-        }
+        drawText(
+            brush = textStyle.brush ?: SolidColor(textStyle.color),
+            textLayoutResult = textLayoutResult,
+            topLeft = Offset(x = center.x * 0.25f, y = size.height - (center.y * 0.55f)  - (textLayoutResult.size.height / 2f))
+        )
     }
 }
 
 
 @Composable
 private fun DSLTimeValue(
-    style: TextStyle,
+    textStyle: TextStyle,
     timeType: TimeParamType,
 ) {
     val time = LocalTime.current
@@ -148,24 +143,22 @@ private fun DSLTimeValue(
             val timeInt = timeType.paramValue(time)
             measurer.measure(
                 "${timeType.paramName} = $timeInt",
-                style
+                textStyle
             )
         }
     }
 
     OClockCanvas {
-        rotate(degrees = 0f) {
-            val offset = when (timeType) {
-                TimeParamType.Hour -> Offset(x = 140f, y = (center.y * 0.8f) - (textLayoutResult.size.height / 2f))
-                TimeParamType.Minute -> Offset(x = 140f, y = center.y - (textLayoutResult.size.height / 2f))
-                TimeParamType.Second -> Offset(x = 140f, y = size.height - (center.y * 0.8f) - (textLayoutResult.size.height / 2f))
-            }
-            drawText(
-                brush = style.brush ?: SolidColor(style.color),
-                textLayoutResult = textLayoutResult,
-                topLeft = offset
-            )
+        val offset = when (timeType) {
+            TimeParamType.Hour -> Offset(x = center.x * 0.55f, y = (center.y * 0.8f) - (textLayoutResult.size.height / 2f))
+            TimeParamType.Minute -> Offset(x = center.x * 0.55f, y = center.y - (textLayoutResult.size.height / 2f))
+            TimeParamType.Second -> Offset(x = center.x * 0.55f, y = size.height - (center.y * 0.8f) - (textLayoutResult.size.height / 2f))
         }
+        drawText(
+            brush = textStyle.brush ?: SolidColor(textStyle.color),
+            textLayoutResult = textLayoutResult,
+            topLeft = offset
+        )
     }
 }
 

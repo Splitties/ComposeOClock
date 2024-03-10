@@ -6,10 +6,10 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.BatteryManager
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.geometry.Offset
@@ -28,7 +28,6 @@ import org.splitties.compose.oclock.OClockCanvas
 import org.splitties.compose.oclock.internal.InternalComposeOClockApi
 import org.splitties.compose.oclock.sample.WatchFacePreview
 import org.splitties.compose.oclock.sample.WearPreviewSizesProvider
-import org.splitties.compose.oclock.sample.extensions.rotate
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -36,7 +35,7 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun DSLClockComplication() {
 
-    val style = remember {
+    val textStyle = remember {
         TextStyle(
             color = Color.White,
             fontFamily = FontFamily.Monospace,
@@ -45,13 +44,12 @@ fun DSLClockComplication() {
     }
 
     Background()
-    TimeAndOpenParentheses(style)
-    Date(style)
-    Battery(style)
-    HeartRate(style)
-    Steps(style)
-    Weather(style)
-    CloseParentheses(style)
+    TimeAndOpenParentheses(textStyle)
+    Date(textStyle)
+    Battery(textStyle)
+    Steps(textStyle)
+    Weather(textStyle)
+    CloseParentheses(textStyle)
 
 }
 
@@ -65,7 +63,7 @@ private fun Background() {
 }
 
 @Composable
-private fun TimeAndOpenParentheses(style: TextStyle) {
+private fun TimeAndOpenParentheses(textStyle: TextStyle) {
 
     @OptIn(InternalComposeOClockApi::class)
     val measurer = LocalTextMeasurerWithoutCache.current
@@ -73,31 +71,29 @@ private fun TimeAndOpenParentheses(style: TextStyle) {
     val textLayoutResult by remember {
         derivedStateOf {
             measurer.measure(
-                "complications {",
-                style
+                "comp {",
+                textStyle
             )
         }
     }
 
     OClockCanvas {
-        rotate(degrees = 0f) {
-            drawText(
-                brush = style.brush ?: SolidColor(style.color),
-                textLayoutResult = textLayoutResult,
-                topLeft = Offset(
-                    x = 60f,
-                    y = (center.y * 0.4f) - (textLayoutResult.size.height / 2f)
-                )
+        drawText(
+            brush = textStyle.brush ?: SolidColor(textStyle.color),
+            textLayoutResult = textLayoutResult,
+            topLeft = Offset(
+                x = center.x * 0.23f,
+                y = (center.y * 0.45f) - (textLayoutResult.size.height / 2f)
             )
-        }
+        )
     }
 }
 
 
 @Composable
-private fun Date(style: TextStyle) {
+private fun Date(textStyle: TextStyle) {
 
-    val formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy")
+    val formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd")
     val date = LocalDate.now().format(formatter)
 
     @OptIn(InternalComposeOClockApi::class)
@@ -107,48 +103,55 @@ private fun Date(style: TextStyle) {
         derivedStateOf {
             measurer.measure(
                 "date = $date",
-                style
+                textStyle
             )
         }
     }
 
     OClockCanvas {
-        rotate(degrees = 0f) {
-            drawText(
-                brush = style.brush ?: SolidColor(style.color),
-                textLayoutResult = textLayoutResult,
-                topLeft = Offset(
-                    x = 120f,
-                    y = (center.y * 0.6f) - (textLayoutResult.size.height / 2f)
-                )
+        drawText(
+            brush = textStyle.brush ?: SolidColor(textStyle.color),
+            textLayoutResult = textLayoutResult,
+            topLeft = Offset(
+                x = center.x * 0.4f,
+                y = (center.y * 0.7f) - (textLayoutResult.size.height / 2f)
             )
-        }
+        )
     }
 
 }
 
 
 @Composable
-private fun Battery(style: TextStyle) {
+private fun Battery(textStyle: TextStyle) {
 
     val context: Context = LocalContext.current
     var batteryLevel by remember { mutableIntStateOf(0) }
 
-    val iFilter = IntentFilter(Intent.ACTION_BATTERY_CHANGED)
-    val batteryStatus = context.registerReceiver(null, iFilter)
+    DisposableEffect(true) {
+        val iFilter = IntentFilter(Intent.ACTION_BATTERY_CHANGED)
+        val batteryStatus = context.registerReceiver(null, iFilter)
 
-    batteryLevel = batteryStatus?.getIntExtra(BatteryManager.EXTRA_LEVEL, -1) ?: -1
+        batteryLevel = batteryStatus?.getIntExtra(BatteryManager.EXTRA_LEVEL, -1) ?: -1
 
-    context.registerReceiver(
-        object : BroadcastReceiver() {
+        val batteryListener = object : BroadcastReceiver() {
             override fun onReceive(ctxt: Context, intent: Intent) {
                 try {
                     batteryLevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
                 } catch (_: IllegalStateException) {
                 }
             }
-        },
-        IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+        }
+
+        context.registerReceiver(
+            batteryListener,
+            IntentFilter(Intent.ACTION_BATTERY_CHANGED)
+        )
+
+        onDispose {
+            context.unregisterReceiver(batteryListener)
+        }
+    }
 
     @OptIn(InternalComposeOClockApi::class)
     val measurer = LocalTextMeasurerWithoutCache.current
@@ -157,63 +160,27 @@ private fun Battery(style: TextStyle) {
         derivedStateOf {
             measurer.measure(
                 "battery = $batteryLevel / 100",
-                style
+                textStyle
             )
         }
     }
 
     OClockCanvas {
-        rotate(degrees = 0f) {
-            drawText(
-                brush = style.brush ?: SolidColor(style.color),
-                textLayoutResult = textLayoutResult,
-                topLeft = Offset(
-                    x = 120f,
-                    y = (center.y * 0.8f) - (textLayoutResult.size.height / 2f)
-                )
+        drawText(
+            brush = textStyle.brush ?: SolidColor(textStyle.color),
+            textLayoutResult = textLayoutResult,
+            topLeft = Offset(
+                x = center.x * 0.4f,
+                y = (center.y * 0.9f) - (textLayoutResult.size.height / 2f)
             )
-        }
+        )
     }
 
 }
 
 
 @Composable
-private fun HeartRate(style: TextStyle) {
-
-    var hr by remember { mutableIntStateOf(-1) }
-
-
-    @OptIn(InternalComposeOClockApi::class)
-    val measurer = LocalTextMeasurerWithoutCache.current
-
-    val textLayoutResult by remember {
-        derivedStateOf {
-            measurer.measure(
-                "heart rate = $hr bps",
-                style
-            )
-        }
-    }
-
-    OClockCanvas {
-        rotate(degrees = 0f) {
-            drawText(
-                brush = style.brush ?: SolidColor(style.color),
-                textLayoutResult = textLayoutResult,
-                topLeft = Offset(
-                    x = 120f,
-                    y = center.y - (textLayoutResult.size.height / 2f)
-                )
-            )
-        }
-    }
-
-}
-
-
-@Composable
-private fun Steps(style: TextStyle) {
+private fun Steps(textStyle: TextStyle) {
 
     var steps by remember { mutableIntStateOf(-1) }
 
@@ -224,29 +191,27 @@ private fun Steps(style: TextStyle) {
         derivedStateOf {
             measurer.measure(
                 "steps = $steps",
-                style
+                textStyle
             )
         }
     }
 
     OClockCanvas {
-        rotate(degrees = 0f) {
-            drawText(
-                brush = style.brush ?: SolidColor(style.color),
-                textLayoutResult = textLayoutResult,
-                topLeft = Offset(
-                    x = 120f,
-                    y = size.height - (center.y * 0.8f) - (textLayoutResult.size.height / 2f)
-                )
+        drawText(
+            brush = textStyle.brush ?: SolidColor(textStyle.color),
+            textLayoutResult = textLayoutResult,
+            topLeft = Offset(
+                x = center.x * 0.4f,
+                y = size.height - (center.y * 0.9f) - (textLayoutResult.size.height / 2f)
             )
-        }
+        )
     }
 
 }
 
 
 @Composable
-private fun Weather(style: TextStyle) {
+private fun Weather(textStyle: TextStyle) {
 
     val weather = ""
 
@@ -257,29 +222,27 @@ private fun Weather(style: TextStyle) {
         derivedStateOf {
             measurer.measure(
                 "weather = $weather",
-                style
+                textStyle
             )
         }
     }
 
     OClockCanvas {
-        rotate(degrees = 0f) {
-            drawText(
-                brush = style.brush ?: SolidColor(style.color),
-                textLayoutResult = textLayoutResult,
-                topLeft = Offset(
-                    x = 120f,
-                    y = size.height - (center.y * 0.6f) - (textLayoutResult.size.height / 2f)
-                )
+        drawText(
+            brush = textStyle.brush ?: SolidColor(textStyle.color),
+            textLayoutResult = textLayoutResult,
+            topLeft = Offset(
+                x = center.x * 0.4f,
+                y = size.height - (center.y * 0.7f) - (textLayoutResult.size.height / 2f)
             )
-        }
+        )
     }
 
 }
 
 
 @Composable
-private fun CloseParentheses(style: TextStyle) {
+private fun CloseParentheses(textStyle: TextStyle) {
     @OptIn(InternalComposeOClockApi::class)
     val measurer = LocalTextMeasurerWithoutCache.current
 
@@ -287,22 +250,20 @@ private fun CloseParentheses(style: TextStyle) {
         derivedStateOf {
             measurer.measure(
                 "}",
-                style
+                textStyle
             )
         }
     }
 
     OClockCanvas {
-        rotate(degrees = 0f) {
-            drawText(
-                brush = style.brush ?: SolidColor(style.color),
-                textLayoutResult = textLayoutResult,
-                topLeft = Offset(
-                    x = 60f,
-                    y = size.height - (center.y * 0.4f) - (textLayoutResult.size.height / 2f)
-                )
+        drawText(
+            brush = textStyle.brush ?: SolidColor(textStyle.color),
+            textLayoutResult = textLayoutResult,
+            topLeft = Offset(
+                x = center.x * 0.3f,
+                y = size.height - (center.y * 0.45f) - (textLayoutResult.size.height / 2f)
             )
-        }
+        )
     }
 }
 

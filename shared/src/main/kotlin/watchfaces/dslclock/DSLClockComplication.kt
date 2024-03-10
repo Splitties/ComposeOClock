@@ -4,15 +4,12 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
 import android.os.BatteryManager
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.geometry.Offset
@@ -184,42 +181,7 @@ private fun Battery(style: TextStyle) {
 @Composable
 private fun HeartRate(style: TextStyle) {
 
-    val context = LocalContext.current
-    val isAmbient by LocalIsAmbient.current
-    var hr by remember { mutableIntStateOf(0) }
-
-    val sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-    val hrCounter = sensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE)
-
-    val heartRateListener = object : SensorEventListener {
-        override fun onSensorChanged(event: SensorEvent?) {
-            if (isAmbient.not()) {
-                try {
-                    hr = event?.values?.get(0)?.toInt() ?: 0
-                } catch (_: IllegalStateException) {
-                }
-
-            }
-        }
-
-        override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-
-        }
-    }
-
-    hrCounter.let { sensor ->
-        when (isAmbient) {
-            true -> sensorManager.unregisterListener(heartRateListener)
-            false -> {
-                sensorManager.registerListener(
-                    heartRateListener,
-                    sensor,
-                    SensorManager.SENSOR_DELAY_NORMAL
-                )
-            }
-        }
-
-    }
+    var hr by remember { mutableIntStateOf(-1) }
 
 
     @OptIn(InternalComposeOClockApi::class)
@@ -286,7 +248,7 @@ private fun Steps(style: TextStyle) {
 @Composable
 private fun Weather(style: TextStyle) {
 
-    val weather = "no idea"
+    val weather = ""
 
     @OptIn(InternalComposeOClockApi::class)
     val measurer = LocalTextMeasurerWithoutCache.current

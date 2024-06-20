@@ -9,6 +9,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
@@ -23,7 +24,6 @@ import org.splitties.compose.oclock.LocalTime
 import org.splitties.compose.oclock.OClockCanvas
 import org.splitties.compose.oclock.internal.InternalComposeOClockApi
 import org.splitties.compose.oclock.sample.WatchFacePreview
-import org.splitties.compose.oclock.sample.extensions.rotate
 import java.util.Locale
 
 @Suppress("DEPRECATION")

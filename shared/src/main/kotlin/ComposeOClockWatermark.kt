@@ -101,7 +101,7 @@ fun ComposeOClockWatermark(finalBrush: Brush) {
 @WatchFacePreview
 @Composable
 private fun ComposeOClockWatermarkPreview(
-    @PreviewParameter(WearPreviewSizesProvider::class) size: Dp
+    @PreviewParameter(WearPreviewSizes::class) size: Dp
 ) = WatchFacePreview(size) {
     ComposeOClockWatermark(SolidColor(Color.Magenta))
 }

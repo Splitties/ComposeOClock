@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import org.splitties.compose.oclock.OClockCanvas
 import org.splitties.compose.oclock.TapEvent
 import org.splitties.compose.oclock.sample.WatchFacePreview
-import org.splitties.compose.oclock.sample.WearPreviewSizesProvider
+import org.splitties.compose.oclock.sample.WearPreviewSizes
 
 @Composable
 fun WatchFaceSwitcher() {
@@ -45,7 +45,7 @@ fun WatchFaceSwitcher() {
 @WatchFacePreview
 @Composable
 private fun WatchFaceSwitcherPreview(
-    @PreviewParameter(WearPreviewSizesProvider::class) size: Dp
+    @PreviewParameter(WearPreviewSizes::class) size: Dp
 ) = WatchFacePreview(size) {
     WatchFaceSwitcher()
 }

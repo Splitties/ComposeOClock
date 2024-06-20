@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -18,7 +19,7 @@ import org.splitties.compose.oclock.LocalTime
 import org.splitties.compose.oclock.OClockCanvas
 import org.splitties.compose.oclock.sample.ComposeOClockWatermark
 import org.splitties.compose.oclock.sample.WatchFacePreview
-import org.splitties.compose.oclock.sample.WearPreviewSizesProvider
+import org.splitties.compose.oclock.sample.WearPreviewSizes
 import org.splitties.compose.oclock.sample.elements.clockHand
 import org.splitties.compose.oclock.sample.extensions.rotate
 
@@ -135,7 +136,7 @@ private val kotlinLogoColors = listOf(
 @WatchFacePreview
 @Composable
 private fun BasicAnalogClockPreview(
-    @PreviewParameter(WearPreviewSizesProvider::class) size: Dp
+    @PreviewParameter(WearPreviewSizes::class) size: Dp
 ) = WatchFacePreview(size) {
     BasicAnalogClock()
 }

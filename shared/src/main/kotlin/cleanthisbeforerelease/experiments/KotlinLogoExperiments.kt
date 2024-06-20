@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.unit.dp
 import org.splitties.compose.oclock.LocalIsAmbient
 import org.splitties.compose.oclock.OClockCanvas
@@ -26,9 +27,8 @@ import org.splitties.compose.oclock.sample.extensions.lineTo
 import org.splitties.compose.oclock.sample.extensions.moveTo
 import org.splitties.compose.oclock.sample.extensions.offsetBy
 import org.splitties.compose.oclock.sample.extensions.plus
-import org.splitties.compose.oclock.sample.extensions.quadraticBezierTo
+import org.splitties.compose.oclock.sample.extensions.quadraticTo
 import org.splitties.compose.oclock.sample.extensions.rememberStateWithSize
-import org.splitties.compose.oclock.sample.extensions.rotate
 import org.splitties.compose.oclock.sample.extensions.rotateAround
 import kotlin.math.sqrt
 
@@ -158,7 +158,7 @@ private fun Path.setToStarX(
     moveTo(topMiddle)
     for (i in 1..count) {
         val target = topMiddle.rotateAround(pivot = center, degrees = 360f * i / count)
-        quadraticBezierTo(center, target)
+        quadraticTo(center, target)
     }
     close()
 }

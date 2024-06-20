@@ -3,6 +3,7 @@ package org.splitties.compose.oclock.sample.cleanthisbeforerelease.elements
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.ui.tooling.preview.WearPreviewSmallRound
 import org.splitties.compose.oclock.OClockCanvas

@@ -14,7 +14,7 @@ pluginManagement {
 }
 
 plugins {
-    id("de.fayard.refreshVersions") version "0.60.4"
+    id("de.fayard.refreshVersions") version "0.60.5"
     id("org.splitties.settings-include-dsl") version "0.2.6"
     id("org.splitties.dependencies-dsl") version "0.2.0"
     id("org.splitties.version-sync") version "0.2.6"

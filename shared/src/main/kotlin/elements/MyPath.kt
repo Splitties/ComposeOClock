@@ -11,7 +11,7 @@ import org.splitties.compose.oclock.sample.extensions.lineTo
 import org.splitties.compose.oclock.sample.extensions.moveTo
 import org.splitties.compose.oclock.sample.extensions.offsetBy
 import org.splitties.compose.oclock.sample.extensions.plus
-import org.splitties.compose.oclock.sample.extensions.quadraticBezierTo
+import org.splitties.compose.oclock.sample.extensions.quadraticTo
 import org.splitties.compose.oclock.sample.extensions.rotateAround
 import kotlin.math.sqrt
 
@@ -34,7 +34,7 @@ fun Path.setToStarX(
     moveTo(topMiddle)
     for (i in 1..count) {
         val target = topMiddle.rotateAround(pivot = center, degrees = 360f * i / count)
-        quadraticBezierTo(center, target)
+        quadraticTo(center, target)
     }
     close()
 }

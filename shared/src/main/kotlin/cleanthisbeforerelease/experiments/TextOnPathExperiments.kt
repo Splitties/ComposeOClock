@@ -32,7 +32,7 @@ import androidx.compose.ui.util.fastForEachIndexed
 import org.splitties.compose.oclock.LocalIsAmbient
 import org.splitties.compose.oclock.OClockCanvas
 import org.splitties.compose.oclock.sample.WatchFacePreview
-import org.splitties.compose.oclock.sample.WearPreviewSizesProvider
+import org.splitties.compose.oclock.sample.WearPreviewSizes
 import org.splitties.compose.oclock.sample.extensions.centerAsTopLeft
 import org.splitties.compose.oclock.sample.extensions.drawTextOnPath
 import org.splitties.compose.oclock.sample.extensions.rememberStateWithSize
@@ -173,7 +173,7 @@ fun TextOnPathExperiment(finalBrush: Brush) {
 @WatchFacePreview
 @Composable
 private fun TextOnPathExperimentPreview(
-    @PreviewParameter(WearPreviewSizesProvider::class) size: Dp
+    @PreviewParameter(WearPreviewSizes::class) size: Dp
 ) = WatchFacePreview(size) {
     TextOnPathExperiment(finalBrush = SolidColor(Color.Magenta))
 }

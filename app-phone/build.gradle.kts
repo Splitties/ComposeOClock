@@ -25,7 +25,6 @@ dependencies {
         AndroidX.compose.material3()
         AndroidX.compose.ui.toolingPreview()
         AndroidX.activity.compose()
-        platform(AndroidX.compose.bom)
         AndroidX.compose.ui()
         AndroidX.compose.ui.graphics()
         AndroidX.compose.ui.toolingPreview()
@@ -38,11 +37,9 @@ dependencies {
     androidTestImplementation {
         AndroidX.test.ext.junit()
         AndroidX.test.espresso.core()
-        platform(AndroidX.compose.bom)
         AndroidX.compose.ui.testJunit4()
     }
     debugImplementation {
-        platform(AndroidX.compose.bom)
         AndroidX.compose.ui.tooling()
         AndroidX.compose.ui.testManifest()
     }

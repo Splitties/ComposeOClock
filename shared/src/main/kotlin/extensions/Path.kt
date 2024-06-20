@@ -13,10 +13,10 @@ inline fun Path.lineTo(position: Offset) {
     lineTo(x = position.x, y = position.y)
 }
 
-inline fun Path.quadraticBezierTo(
+inline fun Path.quadraticTo(
     p1: Offset,
     p2: Offset
-) = quadraticBezierTo(
+) = quadraticTo(
     x1 = p1.x,
     y1 = p1.y,
     x2 = p2.x,

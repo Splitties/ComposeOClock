@@ -15,6 +15,7 @@ dependencies {
     implementation {
         Android.tools.build.gradlePlugin()
         Kotlin.gradlePlugin()
+        plugin("org.jetbrains.kotlin.plugin.compose", "_")()
         Google.playServicesGradlePlugin()
         Firebase.crashlyticsGradlePlugin()
         plugin("de.fayard.refreshVersions", "_")()

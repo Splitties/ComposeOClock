@@ -17,17 +17,17 @@ import org.splitties.compose.oclock.sample.WearPreviewSizes
 fun WatchFaceSwitcher() {
     var index by remember { mutableIntStateOf(0) }
     OClockCanvas(
-        onTap = { event ->
+        onTap = handler@{ event ->
+            val touchEdgeWidth = 48.dp.toPx()
+            val isOnLeftEdge = event.position.x <= touchEdgeWidth
+            val isOnRightEdge = isOnLeftEdge.not() &&
+                    event.position.x >= size.width - touchEdgeWidth
+            if (isOnLeftEdge.not() && isOnRightEdge.not()) return@handler false
             if (event is TapEvent.Up) {
                 val lastIndex = allWatchFaces.lastIndex
-                val touchEdgeWidth = 48.dp.toPx()
-                val isOnLeftEdge = event.position.x <= touchEdgeWidth
-                val isOnRightEdge = isOnLeftEdge.not() &&
-                        event.position.x >= size.width - touchEdgeWidth
                 index = when {
                     isOnLeftEdge -> index - 1
-                    isOnRightEdge -> index + 1
-                    else -> index
+                    else -> index + 1
                 }.let {
                     when {
                         it < 0 -> lastIndex

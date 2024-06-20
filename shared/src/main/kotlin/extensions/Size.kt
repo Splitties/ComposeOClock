@@ -8,6 +8,10 @@ operator fun Size.minus(pixels: Float): Size {
     return Size(width - pixels, height - pixels)
 }
 
+operator fun Size.plus(pixels: Float): Size {
+    return Size(width + pixels, height + pixels)
+}
+
 fun Size.Companion.square(pixels: Float): Size {
     return Size(pixels, pixels)
 }

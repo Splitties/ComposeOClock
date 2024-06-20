@@ -187,3 +187,7 @@ fun DrawScope.drawDrawable(
     )
     drawable.draw(drawContext.canvas.nativeCanvas)
 }
+
+inline fun DrawScope.translate(offset: Offset, block: DrawScope.() -> Unit) {
+    translate(left = offset.x, top = offset.y, block = block)
+}

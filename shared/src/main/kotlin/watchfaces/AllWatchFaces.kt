@@ -5,6 +5,7 @@ import org.splitties.compose.oclock.sample.elements.LoopingSeconds
 
 val allWatchFaces: List<@Composable () -> Unit> = listOf(
     { LoopingSeconds() },
+    { LightLinesWatchFace() },
     { KotlinFanClock() },
     { ComposeFanClock() },
     { BasicAnalogClock() },

@@ -1,6 +1,8 @@
 package org.splitties.compose.oclock.sample.extensions
 
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.unit.IntSize
+import kotlin.math.floor
 import kotlin.math.min
 
 
@@ -24,4 +26,8 @@ fun Size.fitIn(other: Size): Size {
     val minFactor = other.minDimension / minDimension
     val factor = min(maxFactor, minFactor)
     return this * factor
+}
+
+fun Size.toFlooredIntSize(): IntSize {
+    return IntSize(floor(width).toInt(), floor(height).toInt())
 }
